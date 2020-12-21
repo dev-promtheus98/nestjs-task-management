@@ -12,6 +12,7 @@ import {
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTaskFilterDto } from './dto/get-tasks-filter.dto';
+import { TaskStatusValidationpipe } from './pipes/task-status-validation.pipe';
 import { Task, TaskStatus } from './task.model';
 import { TasksService } from './tasks.service';
 
@@ -47,7 +48,7 @@ export class TasksController {
   @Patch('/:id/:status')
   updateTaskStatus(
     @Param('id') id: string,
-    @Param('status') status: TaskStatus,
+    @Param('status', TaskStatusValidationpipe) status: TaskStatus,
   ): Task {
     return this.tasksService.updateTaskStatus(id, status);
   }
